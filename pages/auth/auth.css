@@ -76,6 +76,10 @@ input:focus {
   margin-bottom: 24px;
 }
 
+.signin_button:disabled {
+  cursor: not-allowed;
+}
+
 .btn_abled {
   background-color: var(--button-abled);
 }

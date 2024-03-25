@@ -4,7 +4,7 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const username = document.getElementById("username");
 const confirmPassword = document.getElementById("confirm_password");
-const btn = document.querySelector(".signin_button");
+const signup_button = document.querySelector(".signin_button");
 
 function checkForm() {
   const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}/;
@@ -15,21 +15,13 @@ function checkForm() {
   const isUsernameValid = username.value.length > 0;
   const isConfirmPasswordValid = confirmPassword.value === password.value;
 
-  if (isEmailValid && isPasswordValid && isUsernameValid && isConfirmPasswordValid) {
-    btn.classList.add("btn_abled");
-  } else {
-    btn.classList.remove("btn_abled");
-  }
-};
+  const isFormValid = isEmailValid && isPasswordValid && isUsernameValid && isConfirmPasswordValid;
 
-function btnCheck(e) {
-  if (!btn.classList.contains('btn_abled')) {
-    e.preventDefault();
-  }
+  signup_button.disabled = !isFormValid;
+  signup_button.classList.toggle('btn_abled', isFormValid);
 };
 
 email.addEventListener('input', checkForm);
 password.addEventListener('input', checkForm);
 username.addEventListener('input', checkForm);
 confirmPassword.addEventListener('input', checkForm);
-btn.addEventListener('click', btnCheck);
