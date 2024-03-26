@@ -2,7 +2,7 @@
 
 const email = document.getElementById('email');
 const password = document.getElementById('password');
-const signin_button = document.querySelector('.signin_button');
+const signinButton = document.querySelector('.signin_button');
 
 function checkForm () {
   const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}/;
@@ -13,8 +13,8 @@ function checkForm () {
 
   const isFormValid = isEmailValid && isPasswordValid;
 
-  signin_button.disabled = !isFormValid;
-  signin_button.classList.toggle('btn_abled', isFormValid);
+  signinButton.disabled = !isFormValid;
+  signinButton.classList.toggle('btn_abled', isFormValid);
 };
 
 email.addEventListener('input', checkForm);

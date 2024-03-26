@@ -1,10 +1,10 @@
 "use strict";
 
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const username = document.getElementById("username");
-const confirmPassword = document.getElementById("confirm_password");
-const signup_button = document.querySelector(".signin_button");
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+const username = document.getElementById('username');
+const confirmPassword = document.getElementById('confirm_password');
+const signupButton = document.querySelector('.signin_button');
 
 function checkForm() {
   const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}/;
@@ -17,8 +17,8 @@ function checkForm() {
 
   const isFormValid = isEmailValid && isPasswordValid && isUsernameValid && isConfirmPasswordValid;
 
-  signup_button.disabled = !isFormValid;
-  signup_button.classList.toggle('btn_abled', isFormValid);
+  signupButton.disabled = !isFormValid;
+  signupButton.classList.toggle('btn_abled', isFormValid);
 };
 
 email.addEventListener('input', checkForm);
