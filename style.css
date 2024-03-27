@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/arial-2');
+
 :root {
   --main-color: #3692ff;
   --text-color: #374151;
@@ -154,17 +156,19 @@ footer {
 }
 
 .copyright {
+  font-family: 'Arial', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 19px;
-  color: #9ca3af;
+  color: #676767;
 }
 
 .footer_links {
+  font-family: 'Arial', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 19px;
-  color: #e5e7eb;
+  color: #CFCFCF;
 }
 
 .footer_links a:first-child {
@@ -183,12 +187,153 @@ footer {
 }
 
 /* Moblie */
-@media screen and (max-width: 744px) {
+@media screen and (min-width: 375px) and (max-width: 767px) {
   
+  /* Navigation */
+  nav {
+    padding: 10px 16px;
+  }
+
+  .logo_img {
+    content: url(/images/Img_text_logo.png);
+    width: initial;
+    height: initial;
+  }
+
+  /* Main - Top Banner Section */
+  .banner {
+    display: flex;
+  }
+  
+  .banner_container {
+    padding-top: 48px;
+    justify-content: center;
+    align-items: normal;
+  }
+
+  .banner_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .banner_title {
+    text-align: center;
+    font-size: 32px;
+    line-height: 44.8px;
+    margin-bottom: 18px;
+  }
+
+  .look_button {
+    width: 154px;
+    height: 48px;
+    border-radius: 24px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .banner_img {
+    width: 626px;
+    height: 281px;
+    left: initial;
+  }
+
+  /* Main - Info Section */
+  .info_section{
+    padding: 51px 15px 64px;
+    gap: 64px;
+  }
+
+  .info_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: initial;
+    gap: 20px;
+  }
+
+  .info_content img {
+    width: 343px;
+    height: 259px;
+    border-radius: 12px;
+  }
+  
+  .info_badge {
+    font-size: 16px;
+    line-height: 22.4px;
+    margin-bottom: 8px;
+  }
+
+  .info_title {
+    font-size: 24px;
+    line-height: 33.6px;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+  }
+
+  .info_title br{
+    display: none;
+  }
+
+  .info_description {
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: 0.08em;
+  }
+
+  .info_content.reverse {
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  /* Main - Bottom Banner Section */
+  .banner.bottom {
+    position: relative;
+    height: 540px;
+  }
+
+  .banner_container.bottom {
+    position: static;
+    padding-top: 121px;
+  }
+
+  .banner_title.bottom br {
+    display: inline;
+  }
+
+  .banner_img.bottom {
+    width: 498px;
+    height: 270px;
+  }
+
+  /* Footer */
+  footer {
+    flex-wrap: wrap;
+    height: 160px;
+    padding: 32px
+  }
+  
+  .copyright {
+    display: flex;
+    align-items: flex-end;
+    flex-basis: 100%;
+    order: 2;
+  }
+
+  .footer_links {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-bottom: 50px;
+  }
+
+  .footer_icons {
+    justify-content: center;
+  }
 }
 
 /* Tablet */
-@media screen and (max-width: 1199px) {
+@media screen and (min-width: 768px) and (max-width: 1199px) {
 
   /* Navigation */
   nav {
