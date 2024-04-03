@@ -18,7 +18,6 @@ function checkForm() {
   const isFormValid = isEmailValid && isPasswordValid && isUsernameValid && isConfirmPasswordValid;
 
   signupButton.disabled = !isFormValid;
-  signupButton.classList.toggle('btn_abled', isFormValid);
 };
 
 email.addEventListener('input', checkForm);

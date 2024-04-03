@@ -69,12 +69,13 @@ input:focus {
   margin-bottom: 24px;
 }
 
-.signin_button:disabled {
-  cursor: not-allowed;
+.signin_button {
+  background-color: var(--button-abled);
 }
 
-.btn_abled {
-  background-color: var(--button-abled);
+.signin_button:disabled {
+  cursor: not-allowed;
+  background-color: var(--button-disabled);
 }
 
 .social_signin_layout {
