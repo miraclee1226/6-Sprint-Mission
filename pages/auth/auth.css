@@ -3,9 +3,10 @@
   --cool-gray-400: #9ca3af;
   --cool-gray-800: #1f2937;
   --background-color: #e6f2ff;
-  --button-disabled: #9ca3af;
+  --button-disabled: hsl(218, 11%, 65%);
   --button-abled: #3692ff;
   --link: #3182f6;
+  --error: #BF010A
 }
 
 label {
@@ -27,11 +28,10 @@ input {
   background-color: var(--cool-gray-100);
   color: var(--cool-gray-400);
   padding: 16px 24px;
-  margin-bottom: 24px;
 }
 
 input:focus {
-  outline: 1px solid var(--button-abled);
+  border: 1px solid var(--button-abled);
 }
 
 /* Signin Container */
@@ -51,9 +51,29 @@ input:focus {
   width: 100%;
 }
 
-.password_container {
-  background: url(/images/visible.svg) calc(100% - 16px) no-repeat;
-  background-color: var(--cool-gray-100);
+.input_container {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.toggle_password {
+  position: absolute;
+  top: 56px;
+  right: 27px;
+  cursor: pointer;
+}
+
+/* Error */
+.border_red {
+  border: 1px solid var(--error);
+}
+
+.error_msg {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 17.9px;
+  color: var(--error);
+  margin: 4px 0 0 16px;
 }
 
 .signin_button {
