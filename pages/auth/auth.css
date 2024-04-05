@@ -154,6 +154,10 @@ input:focus {
   .signin_form_layout {
     max-width: 400px;
   }
+
+  .toggle_password {
+    top: 50px;
+  }
 }
 
 /* Tablet */
