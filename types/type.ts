@@ -18,15 +18,12 @@ export interface Article {
   writer: Writer;
 }
 
-export type ArticlesProps = {
+export type Articles = {
   articles: Article[];
 }
-
-export interface ArticlesResponse {
-  data: {
-    list: Article[];
-    totalCount: number;
-  }
+export interface DataFormat<T> {
+  list: T[];
+  totalCount: number;
 }
 
 export interface InitialDataProps {

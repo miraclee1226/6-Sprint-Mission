@@ -2,9 +2,9 @@ import Image from "next/image";
 import formatDate from "utils/formatData";
 import Profile from "public/icon/ic_profile.png";
 import * as S from "./PostStyles";
-import { ArticlesProps } from "types/type";
+import { Articles } from "types/type";
 
-export default function Post({ articles }: ArticlesProps) {
+export default function Post({ articles }: Articles) {
   return (
     <S.PostList>
       {articles?.map((article) => (
