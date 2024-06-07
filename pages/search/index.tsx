@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next';
 import Post from "components/Post";
-import { axiosRequester } from "lib/axiosRequester";
+import { axiosRequester } from "lib/axios";
 import styled from "styled-components";
 import { Article, SearchProps } from "types/type";
 import { AxiosResponse } from 'axios';
@@ -26,12 +26,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-    return {
-      props: {
-        keyword,
-        articles
-      }
+  return {
+    props: {
+      keyword,
+      articles
     }
+  }
 }
 
 export default function Search({ keyword, articles }: SearchProps) {
