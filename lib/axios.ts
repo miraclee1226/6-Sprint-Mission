@@ -8,9 +8,9 @@ export const axiosInstance = axios.create({
   },
 });
 
-type AxiosDispatcher = <T>(options: AxiosRequestConfig<T>) => Promise<AxiosResponse<T>>;
+type AxiosRequester = <T>(options: AxiosRequestConfig<T>) => Promise<AxiosResponse<T>>;
 
-export const axiosRequester: AxiosDispatcher = async (options) => {
+export const axiosRequester: AxiosRequester = async (options) => {
   const client = await axiosInstance({ ...options });
   
   return client;
