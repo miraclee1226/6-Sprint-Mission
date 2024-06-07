@@ -1,3 +1,4 @@
+import Heart from "components/Heart"
 import formatDate from 'utils/formatData';
 import Image from "next/image";
 import Badge from "public/image/image_badge.png";
