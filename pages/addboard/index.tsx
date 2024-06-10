@@ -1,42 +1,64 @@
-import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEvent, useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import TitleContainer from "components/TitleContainer";
 import { RectangleButton } from "components/Button";
+import DeleteIC from "public/icon/ic_delete.svg";
 import styled from "styled-components";
 import PlusIcon from "public/icon/ic_plus.svg";
-import useAxiosFetch from 'hooks/useAxiosFetch';
-import { ACCESS_TOKEN } from 'utils/accessToken';
+import useAxiosFetch from "hooks/useAxiosFetch";
+import { ACCESS_TOKEN } from "utils/accessToken";
 
 export default function AddBoard() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null);
 
   const router = useRouter();
   const { isLoading, error, axiosFetch } = useAxiosFetch();
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-        setImage(file);
-      };
-      reader.readAsDataURL(file);
+  const handlePreviewImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files?.[0];
+    if (imageFile) {
+      let imageUrl = URL.createObjectURL(imageFile);
+      setImagePreview(imageUrl);
+      setImage(imageFile);
     }
   };
+
+  const handleDeleteImage = () => {
+    setImage(null);
+    setImagePreview(null);
+  }
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let imageUrl = "";
+
+    if (image) {
+      const imageFormData = new FormData();
+      imageFormData.append("image", image);
+
+      const imageUploadRes = await axiosFetch({
+        method: 'POST',
+        url: "/images/upload",
+        data: imageFormData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${ACCESS_TOKEN}`
+        },
+      });
+
+      imageUrl = imageUploadRes?.data?.url;
+    }
+
     const formData = new FormData();
     formData.append("content", content);
     formData.append("title", title);
-    if (image) {
-      formData.append("image", image);
+    if (imageUrl) {
+      formData.append("image", imageUrl);
     }
 
     const res = await axiosFetch({
@@ -45,7 +67,7 @@ export default function AddBoard() {
       data: formData,
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`
-        },
+      },
       // withCredentials: true,
     });
 
@@ -55,11 +77,25 @@ export default function AddBoard() {
 
   const isButtonDisabled = !(title && content);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   return (
     <>
       <TitleContainer>
         <Title>게시글 등록하기</Title>
-        <RectangleButton type="submit" disabled={isButtonDisabled} onClick={handleSubmit}>등록</RectangleButton>
+        <RectangleButton
+          type="submit"
+          disabled={isButtonDisabled}
+          onClick={handleSubmit}
+        >
+          등록
+        </RectangleButton>
       </TitleContainer>
       <form id="form" onSubmit={handleSubmit}>
         <Label htmlFor="title">*제목</Label>
@@ -85,18 +121,21 @@ export default function AddBoard() {
             <input
               id="imageUpload"
               type="file"
-              accept="image/*"
+              accept=".png, jpeg, jpg"
               style={{ display: "none" }}
-              onChange={handleImageUpload}
+              onChange={handlePreviewImage}
             />
           </ImageUpload>
           {imagePreview && (
-            <ImagePreview
-              src={imagePreview}
-              width={168}
-              height={168}
-              alt="Preview"
-            />
+            <ImagePreviewContainer>
+              <ImagePreview
+                src={imagePreview}
+                width={168}
+                height={168}
+                alt="Preview"
+              />
+              <DeleteImage onClick={handleDeleteImage} />
+            </ImagePreviewContainer>
           )}
         </ImageUploadContainer>
       </form>
@@ -129,12 +168,12 @@ const Input = styled.input`
   color: ${({ theme }) => theme.colorPalette.inputPlaceholderColor};
   margin: 12px 0;
 
-  &::placeholder{
+  &::placeholder {
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 2.4rem;
     color: ${({ theme }) => theme.colorPalette.inputPlaceholderColor};
-	}
+  }
 `;
 
 const TextArea = styled.textarea`
@@ -149,12 +188,12 @@ const TextArea = styled.textarea`
   line-height: 2.4rem;
   color: ${({ theme }) => theme.colorPalette.inputPlaceholderColor};
 
-  &::placeholder{
+  &::placeholder {
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 2.4rem;
     color: ${({ theme }) => theme.colorPalette.inputPlaceholderColor};
-	}
+  }
 `;
 
 const ImageUploadContainer = styled.div`
@@ -177,7 +216,18 @@ const ImageUpload = styled.div`
 
 const AddImageIcon = styled(PlusIcon)``;
 
-const ImagePreview = styled(Image)`
+const ImagePreviewContainer = styled.div`
+  position: relative;
   margin-left: 16px;
+`;
+
+const ImagePreview = styled(Image)`
   border-radius: 12px;
+`;
+
+const DeleteImage = styled(DeleteIC)`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
 `;
