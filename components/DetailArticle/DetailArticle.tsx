@@ -1,3 +1,4 @@
+import Image from "next/image";
 import UserInfo from "components/UserInfo";
 import HeartContainer from "components/Heart";
 import HorizonLine from "components/HorizonLine";
@@ -9,9 +10,17 @@ export default function DetailArticle({ article }: ArticleProps) {
     <>
       <S.DetailArticleLayout>
         <S.Header>
-          <S.Content>
-            {article.title}
-          </S.Content>
+          <S.ContentContainer>
+            <S.Content>{article.title}</S.Content>
+            {article.image && (
+              <Image
+                src={article.image}
+                width={150}
+                height={150}
+                alt="상세 페이지 사진"
+              />
+            )}
+          </S.ContentContainer>
           <S.KebabIcon width={24} height={24} />
         </S.Header>
         <S.Footer>
@@ -22,9 +31,7 @@ export default function DetailArticle({ article }: ArticleProps) {
           <HeartContainer article={article} />
         </S.Footer>
         <HorizonLine />
-        <S.Paragraph>
-          {article.content}
-        </S.Paragraph>
+        <S.Paragraph>{article.content}</S.Paragraph>
       </S.DetailArticleLayout>
     </>
   );
