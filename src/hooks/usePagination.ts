@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 
-function usePagination(initialPage = 1, totalCount, pageSize, asyncFunction) {
+type AsyncFunction<T> = (...args: any[]) => Promise<T>;
+
+interface PaginationResult {
+  page: number;
+  pageNumbers: number[];
+  handleNextPage: () => void;
+  handlePrevPage: () => void;
+  handleClickPageNum: (number: number) => void;
+}
+
+function usePagination<T>(initialPage = 1, totalCount: number, pageSize: number, asyncFunction: AsyncFunction<T>): PaginationResult {
   const [page, setPage] = useState(initialPage);
   const totalPage = Math.ceil(totalCount / pageSize);
   const pageNumbers = Array.from({ length: totalPage }, (_, index) => index + 1);
@@ -17,7 +27,7 @@ function usePagination(initialPage = 1, totalCount, pageSize, asyncFunction) {
     }
   };
 
-  const handleClickPageNum = (number) => {
+  const handleClickPageNum = (number: number) => {
     if (number !== page) {
       setPage(number);
     }
@@ -29,8 +39,6 @@ function usePagination(initialPage = 1, totalCount, pageSize, asyncFunction) {
 
   return {
     page,
-    setPage,
-    totalPage,
     pageNumbers,
     handleNextPage,
     handlePrevPage,

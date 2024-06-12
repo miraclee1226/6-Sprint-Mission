@@ -2,7 +2,12 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import arrow from "../../assets/arrowDown.svg";
 
-function Accordion({ handleRecent, handleFavorite }) {
+interface AccordionProps {
+  handleRecent: () => void;
+  handleFavorite: () => void;
+}
+
+function Accordion({ handleRecent, handleFavorite }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {

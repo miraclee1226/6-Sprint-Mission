@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DefaultButton from "../common/DefaultButton";
@@ -15,7 +14,9 @@ function Nav() {
         <LogoContainer>
           <Img src={logo} alt="판다마켓 로고" />
         </LogoContainer>
-        <StyledNavLink to="/board">자유게시판</StyledNavLink>
+        <StyledNavLink to="/board" $isActive={pathname === "/board"}>
+          자유게시판
+        </StyledNavLink>
         <StyledNavLink
           to="/items"
           $isActive={pathname === "/additem" ? true : false}
@@ -26,7 +27,7 @@ function Nav() {
       {pathname === "/additem" ? (
         <img src={profile} alt="프로필 아이콘" />
       ) : (
-        <Link to="/login">
+        <Link to="/signin">
           <StyledButton>로그인</StyledButton>
         </Link>
       )}
@@ -64,11 +65,12 @@ const Img = styled.img`
   }
 `;
 
-const StyledNavLink = styled(NavLink)`
+const StyledNavLink = styled(NavLink)<{ $isActive: boolean }>`
   font-size: 18px;
   font-weight: 700;
   line-height: 21.48px;
-  color: ${({ $isActive }) => $isActive ? 'var(--main-color)' : 'var(--nav-text-color)'};
+  color: ${({ $isActive }) =>
+    $isActive ? "var(--main-color)" : "var(--nav-text-color)"};
   margin-left: 47px;
 
   &:not(:first-of-type) {

@@ -1,10 +1,18 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import heart from "../../assets/heart.svg";
-import getProductDetail from "../../api/api";
 
-function ProductContainer({src, alt, description, price, favoriteCount, productId, width }) {
+interface ProductContainerProps {
+  src: string;
+  alt: string;
+  description: string;
+  price: number;
+  favoriteCount: number;
+  productId: number;
+  width?: number;
+}
+
+function ProductContainer({src, alt, description, price, favoriteCount, productId, width }: ProductContainerProps) {
   return (
     <Link to={`/items/${productId}`}>
       <ProductImg src={src} alt={alt} width={width} />

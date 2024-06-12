@@ -4,32 +4,33 @@ import InputForm from "./InputForm";
 import Tag from "./Tag";
 import * as S from "./Styles/AddItemPageStyles";
 
-function AddItemPage(props) {
-  const [image, setImage] = useState(null);
+function AddItemPage() {
+  const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [introduce, setIntroduce] = useState("");
   const [price, setPrice] = useState("");
   const [tag, setTag] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     handleChange(name, value);
   }
 
-  const handleChange = (name, value) => {
+  const handleChange = (name: string, value: string | null) => {
+    const newValue = value === null ? "" : value;
     switch (name) {
       case "name":
-        setName(value);
+        setName(newValue);
         break;
       case "introduce":
-        setIntroduce(value);
+        setIntroduce(newValue);
         break;
       case "price":
-        setPrice(value);
+        setPrice(newValue);
         break;
       case "tag":
-        setTag(value);
+        setTag(newValue);
         break;
       case "image":
         setImage(value);
@@ -49,12 +50,12 @@ function AddItemPage(props) {
   };
 
   // Tags
-  const AddTags = (e) => {
-    const inputValue = e.target.value;
+  const AddTags = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const inputValue =(e.target as HTMLInputElement).value;
 
     if (e.key === "Enter" && inputValue !== "" && !tags.includes(inputValue)) {
       setTags([...tags, inputValue]);
-      e.target.value = "";
+     (e.target as HTMLInputElement).value = "";
     }
   };
 

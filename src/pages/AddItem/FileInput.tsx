@@ -1,22 +1,33 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import uploadIcon from "../../assets/plusIcon.svg";
 import * as S from "./Styles/FileInputStyles";
 
-function FileInput({ name, value, onChange }) {
-  const [preview, setPreview] = useState();
-  const inputRef = useRef();
+interface FileInputProps {
+  name: string; 
+  value?: string | null;
+  onChange: (name: string, value: string | null) =>  void;
+}
 
-  const handleChange = (e) => {
-    const nextValue = e.target.files[0];
-    const nextPreview = URL.createObjectURL(nextValue);
-    setPreview(nextPreview);
-    onChange(name, nextPreview);
+function FileInput({ name, onChange }: FileInputProps) {
+  const [preview, setPreview] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      const nextValue = files[0];
+      const nextPreview = URL.createObjectURL(nextValue);
+      setPreview(nextPreview);
+      onChange(name, nextPreview);
+    }
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = () => {
     const inputNode = inputRef.current;
-    inputNode.value = "";
-    setPreview();
+    if (inputNode) {
+      inputNode.value = "";
+    }
+    setPreview("");
     onChange(name, null);
   };
 

@@ -2,7 +2,15 @@ import styled from "styled-components";
 import leftButton from "../../assets/btnLeft.svg";
 import rightButton from "../../assets/btnRight.svg";
 
-function Pagination({ page, setPage, handlePrevPage, handleNextPage, handleClickPageNum, totalPage, pageNumbers }) {
+interface PaginationProps {
+  page: number;
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
+  handleClickPageNum: (number: number) => void;
+  pageNumbers: number[];
+}
+
+function Pagination({ page, handlePrevPage, handleNextPage, handleClickPageNum, pageNumbers }: PaginationProps) {
 
   return (
     <PaginationIconContainer>
@@ -32,7 +40,7 @@ const ButtonIcon = styled.button`
   background: none;
 `;
 
-const NumberContainer = styled.div`
+const NumberContainer = styled.div<{ $isActive: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +52,7 @@ const NumberContainer = styled.div`
   background-color: ${({ $isActive }) => $isActive ? "var(--main-color)" : "white"}; 
 `;
 
-const Number = styled.p`
+const Number = styled.p<{ $isActive: boolean }>`
   color: ${({ $isActive }) => $isActive ? "white" : "#E5E7EB"}; 
 `;
 

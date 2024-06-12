@@ -1,13 +1,13 @@
 import { Helmet } from 'react-helmet';
 
-function HomePage(props) {
+function BoardPage() {
   return (
     <div>
       <Helmet>
-        <title>메인 페이지</title>
+        <title>자유게시판</title>
       </Helmet>
     </div>
   );
 }
 
-export default HomePage;
+export default BoardPage;

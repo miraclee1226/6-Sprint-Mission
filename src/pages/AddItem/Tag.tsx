@@ -1,9 +1,14 @@
 import * as S from "./Styles/TagStyles";
 
-function Tag ({ tags, setTags }) {
+interface TagsProps {
+  tags: string[];
+  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-  const handleDelete = (indexToRemove) => {
-    const filter = tags.filter((ele, index) => index !== indexToRemove);
+function Tag ({ tags, setTags }: TagsProps) {
+
+  const handleDelete = (indexToRemove: number) => {
+    const filter = tags.filter((_, index) => index !== indexToRemove);
     setTags(filter)
   }
   return(

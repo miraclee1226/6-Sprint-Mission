@@ -1,8 +1,12 @@
 import { styled } from "styled-components";
 import ProductContainer from "./ProductContainer";
+import { Product } from '../../types';
 
-function BestProducts({ bestProducts }) {
-  
+interface BestProductsProps {
+  bestProducts: Product['list'];
+}
+
+function BestProducts({ bestProducts }: BestProductsProps) {
   return (
     <BestProductsContainer>
       <BestProductsTitle>베스트 상품</BestProductsTitle>

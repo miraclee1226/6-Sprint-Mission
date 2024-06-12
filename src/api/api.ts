@@ -1,4 +1,5 @@
 import axiosInstance from "../utils/axiosInstance";
+import { Product } from "../types";
 
 export async function getItems({
   page = 1,
@@ -23,19 +24,21 @@ export async function getBestProducts() {
   }
 }
 
-export async function getProductDetail(params, signal) {
+export async function getProductDetail(params: string) {
   try {
-    const { data } = await axiosInstance.get(`products/${params}`, signal);
+    const { data } = await axiosInstance.get(`products/${params}`);
     return data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getComments(params, signal) {
+export async function getComments(params: string) {
   try {
     const query = 3;
-    const { data } = await axiosInstance.get(`products/${params}/comments?limit=${query}`, signal);
+    const { data } = await axiosInstance.get(
+      `products/${params}/comments?limit=${query}`
+    );
     return data;
   } catch (error) {
     throw error;

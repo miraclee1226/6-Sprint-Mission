@@ -4,8 +4,14 @@ import ProductContainer from "./ProductContainer";
 import DefaultButton from "../../common/DefaultButton";
 import Accordion from "./Accordion";
 import readingGlasses from "../../assets/readingGlasses.svg";
+import { Product } from "../../types";
 
-function AllProducts({ products, setOrderBy }) {
+interface AllProsProps {
+  products: Product['list'];
+  setOrderBy: React.Dispatch<React.SetStateAction<string>>
+}
+
+function AllProducts({ products, setOrderBy }: AllProsProps) {
   const handleRecent = () => {
     setOrderBy("recent");
   };

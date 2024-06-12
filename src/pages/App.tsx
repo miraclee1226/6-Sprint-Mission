@@ -4,7 +4,8 @@ import HomePage from "./HomePage";
 import BoardPage from "./BoardPage";
 import AddItemPage from "./AddItem/AddItemPage";
 import FleaMarketPage from "./FleaMarket/FleaMarketPage";
-import LoginPage from "./LoginPage";
+import SignInPage from "./Auth/SignInPage";
+import SignUpPage from "./Auth/SignUpPage";
 import NotFoundPage from "./NotFoundPage";
 import { ThemeProvider } from "styled-components";
 import theme from "../styles/theme";
@@ -25,9 +26,10 @@ function App() {
               <Route path=":productId" element={<ProductDetailPage />} />
             </Route>
             <Route path="additem" element={<AddItemPage />} />
-            <Route path="login" element={<LoginPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
+          <Route path="signin" element={<SignInPage />} />
+          <Route path="signup" element={<SignUpPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

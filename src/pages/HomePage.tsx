@@ -1,13 +1,13 @@
 import { Helmet } from 'react-helmet';
 
-function LoginPage(props) {
+function HomePage() {
   return (
     <div>
       <Helmet>
-        <title>로그인 페이지</title>
+        <title>메인 페이지</title>
       </Helmet>
     </div>
   );
 }
 
-export default LoginPage;
+export default HomePage;

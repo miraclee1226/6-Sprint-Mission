@@ -1,6 +1,11 @@
 import * as S from "./Styles/CommentsStyles";
+import { CommentsProps } from "../../../types";
 
-function Comments({ comments }) {
+interface Comments {
+  comments: CommentsProps[];
+}
+
+function Comments({ comments }: Comments) {
   return (
     <S.CommentUl>
       {comments?.map((comment, i) => (

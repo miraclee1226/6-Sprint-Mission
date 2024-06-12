@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Helmet } from "react-helmet";
 import { styled } from "styled-components";
 import BestProducts from "./BestProducts";
@@ -8,53 +8,64 @@ import { getBestProducts, getItems } from "../../api/api";
 import Pagination from "./Pagination";
 import useAsync from "../../hooks/useAsync";
 import usePagination from "../../hooks/usePagination";
+import { Product, PageOptions } from "../../types";
 
 function FleaMarketPage() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product["list"]>([]);
   const [orderBy, setOrderBy] = useState("recent");
-  const [allProductsError, getAllProductsAsync] = useAsync(getItems);
-  const [bestProductsError, getBestProductsAsync] = useAsync(getBestProducts);
-  const [bestProducts, setBestProducts] = useState([]);
+  const [allProductsError, getAllProductsAsync] = useAsync<Product>(getItems);
+  const [bestProductsError, getBestProductsAsync] = useAsync<Product>(getBestProducts);
+  const [bestProducts, setBestProducts] = useState<Product["list"]>([]);
   const [totalCount, setTotalCount] = useState(0);
 
   // Pagination Custom Hook
   const {
     page,
-    setPage,
-    totalPage,
     pageNumbers,
     handleNextPage,
     handlePrevPage,
     handleClickPageNum,
-  } = usePagination(1, totalCount, PAGESIZE, async () => {
-    const result = await getAllProductsAsync({ page, pageSize: PAGESIZE, orderBy });
+  } = usePagination<Product>(1, totalCount, PAGESIZE, async function (): Promise<Product> {
+    const result = await getAllProductsAsync({
+      page,
+      pageSize: PAGESIZE,
+      orderBy,
+    });
     return result;
   });
 
   // 베스트 상품
-  const handleLoadBestProducts = useCallback(async () => {
-    const result = await getBestProductsAsync();
-    if (!result) return;
+  const handleLoadBestProducts = useCallback(
+    async function () {
+      const result = await getBestProductsAsync();
+      if (!result) return;
 
-    const { list } = result;
-    const sliceList = list.slice(0, 4);
-    setBestProducts(sliceList);
-  }, [getBestProducts]);
+      const { list } = result;
+      const sliceList = list.slice(0, 4);
+      setBestProducts(sliceList);
+    },
+    [getBestProducts]
+  );
 
   // 전체 상품
-  const handleLoadAllProducts = useCallback(async (options) => {
-    const result = await getAllProductsAsync(options);
-    if (!result) return;
+  const handleLoadAllProducts = useCallback(
+    async (options: PageOptions) => {
+      const result = await getAllProductsAsync(options);
+      if (!result) return;
 
-    const { list, totalCount } = result;
-    setTotalCount(totalCount);
+      const { list, totalCount } = result;
+      if (totalCount !== undefined) {
+        setTotalCount(totalCount);
+      }
 
-    if (options.page === 1) {
-      setProducts(list);
-    } else {
-      setProducts([...list]);
-    }
-  }, [getItems]);
+      if (options.page === 1) {
+        setProducts(list);
+      } else {
+        setProducts([...list]);
+      }
+    },
+    [getItems]
+  );
 
   useEffect(() => {
     handleLoadAllProducts({ page, pageSize: PAGESIZE, orderBy });
@@ -76,11 +87,9 @@ function FleaMarketPage() {
           <AllProducts products={products} setOrderBy={setOrderBy} />
           <Pagination
             page={page}
-            setPage={setPage}
             handlePrevPage={handlePrevPage}
             handleNextPage={handleNextPage}
             handleClickPageNum={handleClickPageNum}
-            totalPage={totalCount}
             pageNumbers={pageNumbers}
           />
         </FleaMarketContainer>
