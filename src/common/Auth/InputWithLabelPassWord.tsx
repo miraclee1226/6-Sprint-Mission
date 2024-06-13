@@ -1,19 +1,45 @@
 import styled from "styled-components";
 import VisibleIcon from "../../assets/ic_visible.svg";
 
-const AuthWrapper = ({ label, ...rest }) => (
-  <InputItem>
-    <Label htmlFor="password">{label}</Label>
-    <InputWrapper>
-      <Input {...rest} />
-      <PasswordToggleButton type="button">
-        <img src={VisibleIcon} alt="비밀번호 숨김 상태 아이콘" />
-      </PasswordToggleButton>
-    </InputWrapper>
-  </InputItem>
-);
+const InputWithLabelPassWord = ({ id, label, type, placeholder, register, errors, password }) => {
+  const validationRules = id === "passwordConfirm"
+    ? {
+        validate: (value) =>
+          value === password || "비밀번호가 일치하지 않습니다."
+      }
+    : {
+        required: "필수 응답 항목입니다.",
+        minLength: {
+          value: 8,
+          message: "비밀번호는 8글자 이상이어야 합니다.",
+        },
+        pattern: {
+          message: "비밀번호는 8글자 이상이어야 합니다.",
+        },
+      };
 
-export default AuthWrapper;
+  return (
+    <InputItem>
+      <Label htmlFor={id}>{label}</Label>
+      <InputWrapper>
+        <Input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          {...register(id, validationRules)}
+        />
+        <PasswordToggleButton type="button">
+          <img src={VisibleIcon} alt="비밀번호 숨김 상태 아이콘" />
+        </PasswordToggleButton>
+      </InputWrapper>
+      {errors?.[id] ? (
+        <ErrorMessage>{errors[id]?.message}</ErrorMessage>
+      ) : null}
+    </InputItem>
+  );
+};
+
+export default InputWithLabelPassWord;
 
 const InputItem = styled.div`
   display: flex;
@@ -53,4 +79,12 @@ const InputWrapper = styled.div`
 const PasswordToggleButton = styled.button`
   position: absolute;
   right: 16px;
+`;
+
+const ErrorMessage = styled.span`
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 17.9px;
+  color: #f74747;
+  margin-left: 16px;
 `;

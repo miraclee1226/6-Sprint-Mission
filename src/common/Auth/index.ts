@@ -5,3 +5,5 @@ export { default as InputWithLabelPassWord } from './InputWithLabelPassWord';
 export { default as SocialLoginWrapper } from './SocialLoginWrapper';
 export { default as SocialLoginLinksWrapper } from './SocialLoginLinksWrapper';
 export { default as CenterLine } from './CenterLine';
+export { default as InputWithLabelNickName } from './InputWithLabelNickName';
+

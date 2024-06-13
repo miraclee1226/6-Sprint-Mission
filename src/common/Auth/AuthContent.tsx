@@ -1,6 +1,6 @@
-const AuthContent = ({ children }) => (
+const AuthContent = ({ onSubmit, children }) => (
   <>
-  <form>
+  <form onSubmit={onSubmit}>
     {children}
   </form>
   </>

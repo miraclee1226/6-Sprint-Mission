@@ -1,26 +1,19 @@
 import styled from "styled-components";
 
-const InputWithLabelEmail = ({ id, label, placeholder, register, errors }) => (
+const InputWithLabelNickName = ({ id, label, placeholder, register }) => (
   <InputItem>
-    <Label htmlFor={id}>{label}</Label>
+    <Label>{label}</Label>
     <Input
       id={id}
       placeholder={placeholder}
       {...register(id, {
         required: "필수 응답 항목입니다.",
-        pattern: {
-          value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-          message: "잘못된 이메일 형식입니다.",
-        },
       })}
     />
-    {errors?.email ? (
-      <ErrorMessage>{errors.email?.message}</ErrorMessage>
-    ) : null}
   </InputItem>
 );
 
-export default InputWithLabelEmail;
+export default InputWithLabelNickName;
 
 const InputItem = styled.div`
   display: flex;
