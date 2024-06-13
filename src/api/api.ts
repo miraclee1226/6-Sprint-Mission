@@ -1,5 +1,5 @@
-import axiosInstance from "../utils/axiosInstance";
-import { Product } from "../types";
+import axiosInstance from "./axiosInstance";
+import { AuthResponse } from "../types/auth";
 
 export async function getItems({
   page = 1,
@@ -43,4 +43,24 @@ export async function getComments(params: string) {
   } catch (error) {
     throw error;
   }
+}
+
+export async function signIn(...rest: AuthResponse[]) {
+  try {
+    const { data } = await axiosInstance.post(`auth/signin`, ...rest);
+    console.log("singin", data)
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function signUp(...rest: AuthResponse[]) {
+  try {
+    const { data } = await axiosInstance.post(`auth/signup`, ...rest);
+    console.log("signup", data)
+    return data;
+  } catch (error) {
+    throw error;
+  } 
 }

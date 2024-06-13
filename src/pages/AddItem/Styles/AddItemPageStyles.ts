@@ -3,16 +3,7 @@ import DefaultButton from "../../../common/DefaultButton";
 
 // AddItemPage.js
 export const Wrapper = styled.form`
-  width: 1200px;
-  margin: 24px auto 170px;
-
-  @media ${props => props.theme.mobile} {
-    width: 344px;
-  }
-
-  @media ${props => props.theme.tablet} {
-    width: 696px;
-  }
+  margin: 24px 0 170px;
 `;
 
 export const Header = styled.header`
