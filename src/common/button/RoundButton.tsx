@@ -1,5 +1,12 @@
 import styled from "styled-components";
-const RoundButton = ({ type, children }) => (
+import { ReactNode } from 'react';
+
+interface RoundButtonProps {
+  type: "button" | "submit" | "reset" | undefined,
+  children: ReactNode
+}
+
+const RoundButton = ({ type, children }: RoundButtonProps) => (
   <>
     <ButtonWrapper type={type}>
       {children}

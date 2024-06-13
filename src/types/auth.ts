@@ -16,3 +16,16 @@ export interface InputWithLabelProps {
   password?: string;
   errors?: FieldErrors<SignInFormValues>;
 }
+
+export interface AuthResponse {
+  user: {
+    id: number,
+    nickname: string,
+    image: string | null,
+    createdAt: string,
+    updatedAt: string,
+    email: string
+  },
+  accessToken: number,
+  refreshToken: number
+}
