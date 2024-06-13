@@ -7,6 +7,7 @@ import profile from "../assets/profileIcon.svg";
 
 function Nav() {
   const { pathname } = useLocation();
+  const accessToken = localStorage.getItem("accessToken");
 
   return (
     <StyledNav>
@@ -24,7 +25,7 @@ function Nav() {
           중고마켓
         </StyledNavLink>
       </ListContainer>
-      {pathname === "/additem" ? (
+      {accessToken ? (
         <img src={profile} alt="프로필 아이콘" />
       ) : (
         <Link to="/signin">
