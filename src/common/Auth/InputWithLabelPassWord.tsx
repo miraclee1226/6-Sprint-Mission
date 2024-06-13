@@ -1,19 +1,17 @@
 import styled from "styled-components";
 import VisibleIcon from "../../assets/ic_visible.svg";
+import { InputWithLabelProps } from "../../types/auth";
 
-const InputWithLabelPassWord = ({ id, label, type, placeholder, register, errors, password }) => {
-  const validationRules = id === "passwordConfirm"
+const InputWithLabelPassWord = ({ id, label, type, placeholder, register, errors, password }: InputWithLabelProps) => {
+  const validationRules = id === "passwordConfirmation"
     ? {
-        validate: (value) =>
+        validate: (value: string | undefined) =>
           value === password || "비밀번호가 일치하지 않습니다."
       }
     : {
         required: "필수 응답 항목입니다.",
         minLength: {
           value: 8,
-          message: "비밀번호는 8글자 이상이어야 합니다.",
-        },
-        pattern: {
           message: "비밀번호는 8글자 이상이어야 합니다.",
         },
       };

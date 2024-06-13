@@ -10,11 +10,24 @@ import {
   CenterLine,
 } from "../../common/Auth";
 import { RoundButton } from "../../common/button";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { SignInFormValues } from "../../types/auth";
+import { signUp } from "../../api/api";
+import useAsync from "../../hooks/useAsync";
+import { useNavigate } from "react-router-dom";
 
 function SignUpPage() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<SignInFormValues>();
+  const [signUpForm, setSignUpForm] = useAsync(signUp);
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
+    const { accessToken, refreshToken } = await setSignUpForm(data);
+    localStorage.setItem("accessToken",  accessToken);
+    localStorage.setItem("refreshToken",  refreshToken);
+    if(accessToken && refreshToken) {
+      navigate('/signin');
+    }
+  }
 
   const password = watch("password");
 
@@ -48,7 +61,7 @@ function SignUpPage() {
           />
           <InputWithLabelPassWord
             label="비밀번호 확인"
-            id="passwordConfirm"
+            id="passwordConfirmation"
             type="password"
             placeholder="비밀번호를 다시 한 번 입력해주세요"
             register={register}

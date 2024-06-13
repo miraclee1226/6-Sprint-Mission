@@ -1,8 +1,13 @@
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import MainLogo from "../../assets/pandaLogo.svg";
 import styled from "styled-components";
 
-const AuthWrapper = ({ children }) => (
+type AuthWrapperProps = {
+  children: ReactNode
+}
+
+const AuthWrapper = ({ children }: AuthWrapperProps) => (
   <Positioner>
     <ImageWrapper to="/">
       <img src={MainLogo} alt="메인 로고" width="396" height="132" />

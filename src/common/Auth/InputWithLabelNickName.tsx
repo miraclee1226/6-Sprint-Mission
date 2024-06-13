@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { InputWithLabelProps } from "../../types/auth";
 
-const InputWithLabelNickName = ({ id, label, placeholder, register }) => (
+const InputWithLabelNickName = ({ id, label, placeholder, register }: InputWithLabelProps) => (
   <InputItem>
     <Label>{label}</Label>
     <Input

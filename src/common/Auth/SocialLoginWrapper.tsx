@@ -1,6 +1,11 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 
-const SocialLoginWrapper = ({ children }) => (
+type SocialLoginWrapperProps = {
+  children: ReactNode
+}
+
+const SocialLoginWrapper = ({ children }: SocialLoginWrapperProps) => (
   <SocialLogin>
     <SimpleLogin>간편 로그인하기</SimpleLogin>
       {children}

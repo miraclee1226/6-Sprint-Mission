@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { InputWithLabelProps } from "../../types/auth";
 
-const InputWithLabelEmail = ({ id, label, placeholder, register, errors }) => (
+const InputWithLabelEmail = ({ id, label, placeholder, register, errors }: InputWithLabelProps) => (
   <InputItem>
     <Label htmlFor={id}>{label}</Label>
     <Input

@@ -9,12 +9,25 @@ import {
   CenterLine
 } from "../../common/Auth";
 import { RoundButton } from "../../common/button";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { signIn } from "../../api/api";
+import useAsync from "../../hooks/useAsync";
+import { useNavigate } from "react-router-dom";
+import { SignInFormValues } from "../../types/auth";
 
 function SignInPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data) => console.log(data);
-
+  const { register, handleSubmit, formState: { errors } } = useForm<SignInFormValues>();
+  const [ signInForm, setSignInForm ] = useAsync(signIn);
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
+    const { accessToken, refreshToken } = await setSignInForm(data);
+    localStorage.setItem("accessToken",  accessToken);
+    localStorage.setItem("refreshToken",  refreshToken);
+    if(accessToken && refreshToken) {
+      navigate('/');
+    }
+  }
+  
   return (
     <>
       <Helmet>

@@ -1,11 +1,29 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const CenterLine = ({ link, auth }) => (
-  <AuthSwitch>
-  판다마켓이 처음이신가요? <SignUp to={link}>{auth}</SignUp>
-  </AuthSwitch>
-);
+interface CenterLineProps {
+  link: string,
+  auth: string
+}
+
+const CenterLine = ({ link, auth }: CenterLineProps) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  return (
+    <AuthSwitch>
+    판다마켓이 처음이신가요? <SignUp to={link}>{auth}</SignUp>
+    </AuthSwitch>
+  )
+};
 
 export default CenterLine;
 
