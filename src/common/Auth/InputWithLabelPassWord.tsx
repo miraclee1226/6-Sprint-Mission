@@ -6,7 +6,7 @@ const InputWithLabelPassWord = ({ id, label, type, placeholder, register, errors
   const validationRules = id === "passwordConfirmation"
     ? {
         validate: (value: string | undefined) => {
-          if (watch('password') !== value) return "비밀번호가 일치하지 않습니다.";
+          if (watch?.('password') !== value) return "비밀번호가 일치하지 않습니다.";
         }
       }
     : {
