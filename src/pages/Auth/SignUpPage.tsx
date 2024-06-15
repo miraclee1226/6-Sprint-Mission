@@ -17,7 +17,7 @@ import useAsync from "../../hooks/useAsync";
 import { useNavigate } from "react-router-dom";
 
 function SignUpPage() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<SignInFormValues>();
+  const { register, watch, handleSubmit, formState: { errors } } = useForm<SignInFormValues>();
   const [signUpForm, setSignUpForm] = useAsync(signUp);
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
@@ -28,8 +28,6 @@ function SignUpPage() {
       navigate('/signin');
     }
   }
-
-  const password = watch("password");
 
   return (
     <>
@@ -65,7 +63,7 @@ function SignUpPage() {
             type="password"
             placeholder="비밀번호를 다시 한 번 입력해주세요"
             register={register}
-            password={password}
+            watch={watch}
             errors={errors}
           />
           <RoundButton type="submit">회원가입</RoundButton>

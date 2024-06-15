@@ -2,11 +2,12 @@ import styled from "styled-components";
 import VisibleIcon from "../../assets/ic_visible.svg";
 import { InputWithLabelProps } from "../../types/auth";
 
-const InputWithLabelPassWord = ({ id, label, type, placeholder, register, errors, password }: InputWithLabelProps) => {
+const InputWithLabelPassWord = ({ id, label, type, placeholder, register, errors, watch }: InputWithLabelProps) => {
   const validationRules = id === "passwordConfirmation"
     ? {
-        validate: (value: string | undefined) =>
-          value === password || "비밀번호가 일치하지 않습니다."
+        validate: (value: string | undefined) => {
+          if (watch('password') !== value) return "비밀번호가 일치하지 않습니다.";
+        }
       }
     : {
         required: "필수 응답 항목입니다.",

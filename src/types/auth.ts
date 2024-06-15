@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { UseFormRegister, FieldErrors, UseFormWatch } from "react-hook-form";
 
 export interface SignInFormValues {
   email: string;
@@ -15,6 +15,7 @@ export interface InputWithLabelProps {
   register: UseFormRegister<SignInFormValues>;
   password?: string;
   errors?: FieldErrors<SignInFormValues>;
+  watch?: UseFormWatch<SignInFormValues>;
 }
 
 export interface AuthResponse {
