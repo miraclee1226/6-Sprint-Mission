@@ -8,7 +8,7 @@ export async function getAllProducts({ page = 1, pageSize = 10, orderBy = 'recen
 }
 
 export async function getBestProducts() {
-  const { data } = await axiosInstance.get('/products?orderBy=favorite');
+  const { data } = await axiosInstance.get('/products?pageSize=100&orderBy=favorite');
   return data;
 }
 

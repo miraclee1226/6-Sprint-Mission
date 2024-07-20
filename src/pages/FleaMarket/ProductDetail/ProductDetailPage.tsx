@@ -9,6 +9,7 @@ import { ReactComponent as HeartIcon } from '../../../assets/heartIcon.svg';
 import { ReactComponent as BackIcon } from '../../../assets/backIcon.svg';
 import { ReactComponent as InquireImg } from '../../../assets/inquireImg.svg';
 import * as S from './Styles/ProductDetailPageStyles';
+import { Product } from '../../../types';
 
 function ProductDetailPage() {
   const { productId } = useParams();
@@ -68,6 +69,15 @@ function ProductDetailPage() {
     enabled: productId !== null,
     queryKey: ['productDetail', productId],
     queryFn: () => getProductDetail(productId),
+    placeholderData: true,
+    initialData: () => {
+      const products = queryClient.getQueryData<Product>(['bestProducts']);
+      const productDetail = products?.list?.find((p: { id: number | string }) => {
+        return p.id === productId;
+      });
+      return productDetail;
+    },
+    staleTime: 60 * 1000,
   });
 
   const {
@@ -78,41 +88,47 @@ function ProductDetailPage() {
     enabled: productId !== null,
     queryKey: ['comments', productId],
     queryFn: () => getComments(productId),
+    placeholderData: true,
+    initialData: () => {
+      const products = queryClient.getQueryData<Product>(['bestProducts']);
+      const productDetail = products?.list?.find((p: { id: number | string }) => {
+        return p.id === productId;
+      });
+      return productDetail;
+    },
+    staleTime: 60 * 1000,
   });
 
-  if (productDetailStatus === 'pending') return <h1>Loading...</h1>;
   if (productDetailStatus === 'error') return <h1>{productDetailError.message}</h1>;
-
-  if (commentsStatus === 'pending') return <h1>Loading...</h1>;
   if (commentsStatus === 'error') return <h1>{commentsError.message}</h1>;
 
   return (
     <S.Wrapper>
       {/* 상품 상세 섹션 */}
       <S.ProductDetailContainer>
-        {productDetailData && (
+        {productDetailStatus === 'success' && (
           <>
-            <S.ProductImage src={productDetailData?.images} alt={productDetailData.name} />
+            <S.ProductImage src={productDetailData.images} alt={productDetailData.name} />
             <S.DescriptionContainer>
               <div>
                 <div>
                   <S.DescriptionBox>
                     <div>
-                      <S.DescriptionTitle>{productDetailData?.name}</S.DescriptionTitle>
-                      <S.DescriptionPrice>{productDetailData?.price}</S.DescriptionPrice>
+                      <S.DescriptionTitle>{productDetailData.name}</S.DescriptionTitle>
+                      <S.DescriptionPrice>{productDetailData.price}</S.DescriptionPrice>
                     </div>
                     <S.SettingIcon onClick={toggleAccordion} />
                     <ProductDetailAccordian items={accordionItems} isOpen={isAccordionOpen} />
                   </S.DescriptionBox>
                   <S.IntroduceContainer>
                     <S.Title>상품 소개</S.Title>
-                    <p>{productDetailData?.description}</p>
+                    <p>{productDetailData.description}</p>
                   </S.IntroduceContainer>
                 </div>
                 <div>
                   <S.Title>상품 태그</S.Title>
                   <S.TagUl>
-                    {productDetailData?.tags?.map((tag: string, index: number) => (
+                    {productDetailData.tags?.map((tag: string, index: number) => (
                       <S.TagLi key={index}>#{tag}</S.TagLi>
                     ))}
                   </S.TagUl>
@@ -138,7 +154,7 @@ function ProductDetailPage() {
         <S.SubmitButton type="button" disabled={!isFormValid()} onClick={handleSubmit}>
           등록
         </S.SubmitButton>
-        {commentsData?.list?.length === 0 ? (
+        {commentsData.list?.length === 0 ? (
           <S.InquireContainer>
             <InquireImg />
             <S.InquireDescription>아직 문의가 없습니다.</S.InquireDescription>
